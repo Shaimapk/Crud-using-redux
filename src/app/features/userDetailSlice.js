@@ -40,10 +40,31 @@ export const showUser = createAsyncThunk(
     }
 );
 
+export const deleteUser = createAsyncThunk(
+    "users/deleteUser",
+    async (id,thunkAPI)=>{
+        try {
+            const response = await fetch(`https://6a229e9e5c610353286a152c.mockapi.io/users/${id}`,
+            {method:'DELETE'}
+            );
+            if(!response.ok){
+                throw new Error('Failed to delete the data');
+            }
+            return String(id);
+        } 
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.message)
+        }
+    }
+);
+
+
+//slice
+
 const userDetail=createSlice({
     name:'userDetail',
     initialState:{
-        users:['shinjan'],
+        users:[],
         loading:false,
         error:null
     },
@@ -81,6 +102,24 @@ const userDetail=createSlice({
                 }
             )
             .addCase(showUser.rejected,
+                (state,action)=>{
+                    state.loading=false;
+                    state.error=action.payload;
+                }
+            )
+            .addCase(deleteUser.fulfilled,
+                (state,action)=>{
+                    state.loading=false;
+                    state.users=state.users.filter((user)=>user.id!==action.payload);
+                }
+            )
+            .addCase(deleteUser.pending,
+                (state)=>{
+                    state.loading=true;
+                    state.error=null;
+                }
+            )
+            .addCase(deleteUser.rejected,
                 (state,action)=>{
                     state.loading=false;
                     state.error=action.payload;

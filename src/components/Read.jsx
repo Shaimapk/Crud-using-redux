@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { showUser } from "../app/features/userDetailSlice";
+import { deleteUser, showUser } from "../app/features/userDetailSlice";
 import ViewUserModel from "./ViewUserModel";
 
 export default function Read() {
@@ -40,7 +40,7 @@ export default function Read() {
                             <p className="card-text">{user.age}</p>
                             <button className="btn btn-link card-link" onClick={()=>handleView(user)}>View</button>
                             <Link  className="card-link">Edit</Link>
-                            <Link  className="card-link">Delete</Link>
+                            <button  className="btn btn-link card-link" onClick={()=>dispatch(deleteUser(user.id))}>Delete</button>
                         </div>
                     </div>
 
