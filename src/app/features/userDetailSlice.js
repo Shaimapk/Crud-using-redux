@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
 
 export const createUser = createAsyncThunk(
     "users/createUser",
@@ -53,7 +53,7 @@ export const deleteUser = createAsyncThunk(
             return String(id);
         } 
         catch (error) {
-            return thunkAPI.rejectWithValue(error.message)
+            return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
@@ -73,56 +73,37 @@ const userDetail=createSlice({
         builder
             .addCase(createUser.fulfilled,
                 (state,action)=>{
-                    state.loading=false;
                     state.users.push(action.payload);
-                }
-            )
-            .addCase(createUser.pending,
-                (state)=>{
-                    state.loading=true;
-                    state.error=null;
-                }
-            )
-            .addCase(createUser.rejected,
-                (state,action)=>{
-                    state.loading=false;
-                    state.error=action.payload;
                 }
             )
             .addCase(showUser.fulfilled,
                 (state,action)=>{
-                    state.loading=false;
                     state.users=action.payload;
-                }
-            )
-            .addCase(showUser.pending,
-                (state)=>{
-                    state.loading=true;
-                    state.error=null;
-                }
-            )
-            .addCase(showUser.rejected,
-                (state,action)=>{
-                    state.loading=false;
-                    state.error=action.payload;
                 }
             )
             .addCase(deleteUser.fulfilled,
                 (state,action)=>{
-                    state.loading=false;
                     state.users=state.users.filter((user)=>user.id!==action.payload);
                 }
             )
-            .addCase(deleteUser.pending,
+            .addMatcher(
+                isPending(createUser,showUser,deleteUser),
                 (state)=>{
                     state.loading=true;
                     state.error=null;
                 }
             )
-            .addCase(deleteUser.rejected,
+            .addMatcher(
+                isRejected(createUser,showUser,deleteUser),
                 (state,action)=>{
                     state.loading=false;
                     state.error=action.payload;
+                }
+            )
+            .addMatcher(
+                isFulfilled(createUser,showUser,deleteUser),
+                 (state)=>{
+                    state.loading=false;
                 }
             )
     }
