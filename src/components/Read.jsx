@@ -6,10 +6,10 @@ import ViewUserModel from "./ViewUserModel";
 
 export default function Read() {
     const dispatch =  useDispatch();
-    const {users,loading,error}=useSelector((state)=>state.app);
+    const {users,loading,error,searchData}=useSelector((state)=>state.app);
     const [selectedUser,setSelectedUser]=useState(null);
     const [showModal,setShowModal]=useState(false);
-
+    
     useEffect(()=>{
         dispatch(showUsers());
     },[dispatch]);
@@ -18,6 +18,11 @@ export default function Read() {
         setSelectedUser(user);
         setShowModal(true);
     }
+
+    const filteredUsers = users.filter((user)=>(
+        user.name.toLowerCase().includes(searchData.toLowerCase())
+    ));
+    
 
 
   return (
@@ -31,7 +36,7 @@ export default function Read() {
         {!loading && error===null &&
             <div>
                 <h2>All Data</h2>
-                {users.map((user)=>(
+                {filteredUsers.map((user)=>(
                     
                     <div className="card mb-3" key={user.id}>
                         <div className="card-body">

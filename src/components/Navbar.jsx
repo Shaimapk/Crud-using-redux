@@ -1,9 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { searchData } from "../app/features/userDetailSlice";
 
 export default function Navbar() {
 
     const users = useSelector((state)=>state.app.users);
+    const dispatch = useDispatch();
+
+
 
   return (
     <div>
@@ -23,7 +27,7 @@ export default function Navbar() {
         </li>
       </ul>
       <form className="d-flex w-50" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e)=>dispatch(searchData(e.target.value))}/>
       </form>
     </div>
   </div>
