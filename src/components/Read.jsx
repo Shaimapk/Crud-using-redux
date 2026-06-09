@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteUser, showUser } from "../app/features/userDetailSlice";
+import { deleteUser, showUsers } from "../app/features/userDetailSlice";
 import ViewUserModel from "./ViewUserModel";
 
 export default function Read() {
@@ -11,7 +11,7 @@ export default function Read() {
     const [showModal,setShowModal]=useState(false);
 
     useEffect(()=>{
-        dispatch(showUser());
+        dispatch(showUsers());
     },[dispatch]);
 
     const handleView =(user)=>{
@@ -39,7 +39,7 @@ export default function Read() {
                             <h6 className="card-subtitle mb-2 text-body-secondary">{user.email}</h6>
                             <p className="card-text">{user.age}</p>
                             <button className="btn btn-link card-link" onClick={()=>handleView(user)}>View</button>
-                            <Link  className="card-link">Edit</Link>
+                            <Link to={`/edit/${user.id}`}  className="btn btn-link card-link">Edit</Link>
                             <button  className="btn btn-link card-link" onClick={()=>dispatch(deleteUser(user.id))}>Delete</button>
                         </div>
                     </div>

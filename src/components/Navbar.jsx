@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
 
     const users = useSelector((state)=>state.app.users);
-    
+
   return (
     <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
