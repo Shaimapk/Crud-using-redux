@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../app/features/userDetailSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
 
@@ -11,6 +12,8 @@ export default function Create() {
         gender:''
     });
 
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
     const {error}=useSelector((state)=>state.app);
 
@@ -20,16 +23,18 @@ export default function Create() {
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
-            await dispatch(createUser(user));
+            await dispatch(createUser(user)).unwrap();
             setUser({
                 name:'',
                 email:'',
                 age:'',
                 gender:''
             });
+            navigate('/read');
         }catch(error){
             alert(error);
         }
+
     }
 
 

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteUser, showUsers } from "../app/features/userDetailSlice";
+import { deleteUser } from "../app/features/userDetailSlice";
 import ViewUserModel from "./ViewUserModel";
 
 export default function Read() {
@@ -11,9 +11,6 @@ export default function Read() {
     const [showModal,setShowModal]=useState(false);
     const [genderFilter,setGenderFilter]=useState('all');
     
-    useEffect(()=>{
-        dispatch(showUsers());
-    },[dispatch]);
 
     const handleView =(user)=>{
         setSelectedUser(user);
