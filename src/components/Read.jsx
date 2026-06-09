@@ -9,6 +9,7 @@ export default function Read() {
     const {users,loading,error,searchData}=useSelector((state)=>state.app);
     const [selectedUser,setSelectedUser]=useState(null);
     const [showModal,setShowModal]=useState(false);
+    const [genderFilter,setGenderFilter]=useState('all');
     
     useEffect(()=>{
         dispatch(showUsers());
@@ -20,7 +21,8 @@ export default function Read() {
     }
 
     const filteredUsers = users.filter((user)=>(
-        user.name.toLowerCase().includes(searchData.toLowerCase())
+        user.name.toLowerCase().includes(searchData.toLowerCase()) &&
+        ( genderFilter==='all' || user.gender===genderFilter)
     ));
     
 
@@ -36,6 +38,22 @@ export default function Read() {
         {!loading && error===null &&
             <div>
                 <h2>All Data</h2>
+                
+                <div className="d-flex justify-content-center gap-4 m-2">
+                    <div>
+                        <input className="form-check-input" type="radio" name="gender" value="all" checked={genderFilter==='all'} onChange={(e)=>setGenderFilter(e.target.value)}/>
+                        <label className="form-check-label">All</label>
+                    </div>
+                    <div>
+                        <input className="form-check-input" type="radio" name="gender" value="male" checked={genderFilter==='male'} onChange={(e)=>setGenderFilter(e.target.value)}/>
+                        <label className="form-check-label">Male</label>
+                    </div>
+                    <div>
+                        <input className="form-check-input" type="radio" name="gender" value="female" checked={genderFilter==='female'} onChange={(e)=>setGenderFilter(e.target.value)}/>
+                        <label className="form-check-label">Female</label>
+                    </div>
+                </div>
+
                 {filteredUsers.map((user)=>(
                     
                     <div className="card mb-3" key={user.id}>
