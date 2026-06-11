@@ -12,6 +12,7 @@ export default function Create() {
         age:'',
         gender:''
     });
+    const users = useSelector((state)=>state.app.users);
 
     const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ export default function Create() {
     }
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        const errors=formValidation(user)
+        const errors=formValidation(user,users);
         setValidationErrors(errors);
 
         if(Object.keys(errors).length > 0) return;

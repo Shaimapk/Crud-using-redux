@@ -13,6 +13,8 @@ export default function Update() {
         gender:""
     });
 
+    const users=useSelector((state)=>state.app.users);
+
     const {error}=useSelector((state)=>state.app);
 
     const {id}= useParams();
@@ -43,7 +45,7 @@ export default function Update() {
 
     const handleEdit =async (e)=>{
         e.preventDefault();
-        const errors = formValidation(user);
+        const errors = formValidation(user,users,true); //isedit = true in formValidation()
         setValidationErrors(errors);
         if(Object.keys(errors).length>0) return;
         
