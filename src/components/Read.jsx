@@ -18,8 +18,16 @@ export default function Read() {
     }
 
     const filteredUsers = users.filter((user)=>(
-        user.name.toLowerCase().includes(searchData.toLowerCase()) &&
-        ( genderFilter==='all' || user.gender===genderFilter)
+        (
+            //search by name and email
+            user.name.toLowerCase().includes(searchData.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchData.toLowerCase())
+        ) &&
+        ( 
+            //filter by gender
+            genderFilter==='all' || 
+            user.gender===genderFilter
+        )
     ));
     
 
