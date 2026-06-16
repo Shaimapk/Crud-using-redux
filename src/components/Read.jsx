@@ -68,7 +68,13 @@ export default function Read() {
                             <p className="card-text">{user.age}</p>
                             <button className="btn btn-link card-link" onClick={()=>handleView(user)}>View</button>
                             <Link to={`/edit/${user.id}`}  className="btn btn-link card-link">Edit</Link>
-                            <button  className="btn btn-link card-link" onClick={()=>dispatch(deleteUser(user.id))}>Delete</button>
+                            <button  className="btn btn-link card-link" onClick={()=>{
+                                if(window.confirm(`Do you want to delete ${user.name}?`)){
+                                     dispatch(deleteUser(user.id))
+                                }
+                            }}>
+                                Delete
+                            </button>
                         </div>
                     </div>
 

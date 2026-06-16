@@ -3,6 +3,7 @@ function ViewUserModel({user,closeModal}) {
 
     
   return (
+    <>
         <div className="modal show" style={{display:"block"}}>
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -22,6 +23,8 @@ function ViewUserModel({user,closeModal}) {
                 </div>
             </div>
         </div>
+        <div className="modal-backdrop fade show"></div>
+    </>
   )
 }
 
